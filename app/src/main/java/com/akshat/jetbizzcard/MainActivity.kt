@@ -52,8 +52,10 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             JetBizzCardTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { _ ->
-                    createBizzCard()
+                Scaffold(modifier = Modifier.fillMaxSize()) { it ->
+                    Surface(modifier = Modifier.padding(top = it.calculateTopPadding())) {
+                        createBizzCard()
+                    }
                 }
             }
         }
@@ -73,7 +75,7 @@ fun createBizzCard() {
         Card(
             modifier = Modifier
                 .width(200.dp)
-                .height(390.dp)
+                .fillMaxHeight()
                 .padding(12.dp),
             colors = CardColors(
                 containerColor = Color.White,
@@ -98,13 +100,14 @@ fun createBizzCard() {
                     {
                         buttonClickedState.value = !buttonClickedState.value
                     }) {
-                    Text(text = "Portfolio",
-                        style = MaterialTheme.typography.bodySmall)
+                    Text(
+                        text = "Portfolio",
+                        style = MaterialTheme.typography.bodySmall
+                    )
                 }
-                if (buttonClickedState.value){
+                if (buttonClickedState.value) {
                     Content()
-                }
-                else{
+                } else {
                     Box() {
 
                     }
@@ -116,37 +119,58 @@ fun createBizzCard() {
 }
 
 @Composable
-fun Content(){
-    Box(modifier = Modifier
-        .fillMaxHeight()
-        .fillMaxWidth()
-        .padding(5.dp)){
-        Surface(modifier = Modifier
-            .padding(3.dp)
+fun Content() {
+    Box(
+        modifier = Modifier
+            .fillMaxHeight()
             .fillMaxWidth()
-            .fillMaxHeight(),
+            .padding(5.dp)
+    ) {
+        Surface(
+            modifier = Modifier
+                .padding(3.dp)
+                .fillMaxWidth()
+                .fillMaxHeight(),
             shape = RoundedCornerShape(corner = CornerSize(6.dp)),
             border = BorderStroke(width = 2.dp, color = Color.LightGray)
         ) {
-            Portfolio(data = listOf("Project 1", "Project 2", "Project 3" , "Project 1", "Project 2", "Project 3"))
+            Portfolio(
+                data = listOf(
+                    "Project 1",
+                    "Project 2",
+                    "Project 3",
+                    "Project 1",
+                    "Project 2",
+                    "Project 3"
+                )
+            )
         }
     }
 }
 
 @Composable
 fun Portfolio(data: List<String>) {
-    LazyColumn{
-        items(data){item  ->
-            Card(modifier = Modifier
-                .padding(7.dp)
-                .fillMaxWidth(),
-                shape = RectangleShape) {
-                Row(modifier = Modifier
-                    .padding(8.dp)
-                    .background(MaterialTheme.colorScheme.surface)
-                    .padding(16.dp)) {
+    LazyColumn {
+        items(data) { item ->
+            Card(
+                modifier = Modifier
+                    .padding(7.dp)
+                    .fillMaxHeight()
+                    .fillMaxWidth(),
+                shape = RectangleShape
+            ) {
+                Row(
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .background(MaterialTheme.colorScheme.surface)
+                        .padding(16.dp)
+                ) {
                     SetProfileImage(modifier = Modifier.size(100.dp))
-                    Column(modifier = Modifier.padding(7.dp).align(alignment = Alignment.CenterVertically)) {
+                    Column(
+                        modifier = Modifier
+                            .padding(7.dp)
+                            .align(alignment = Alignment.CenterVertically)
+                    ) {
                         Text(text = item, fontWeight = FontWeight.Bold)
                         Text(text = "Nice one")
                     }
@@ -161,15 +185,21 @@ fun Portfolio(data: List<String>) {
 @Composable
 private fun GetInfo() {
     Column(modifier = Modifier.padding(5.dp)) {
-        Text(text = "Akshat S.",
+        Text(
+            text = "Akshat S.",
             style = MaterialTheme.typography.headlineSmall,
-            color = Color.Red)
-        Text(text = "Compose Programmer",
+            color = Color.Red
+        )
+        Text(
+            text = "Compose Programmer",
             style = MaterialTheme.typography.titleSmall,
-            modifier = Modifier.padding(3.dp))
-        Text(text = "@theMountainFam",
+            modifier = Modifier.padding(3.dp)
+        )
+        Text(
+            text = "@theMountainFam",
             style = MaterialTheme.typography.titleSmall,
-            modifier = Modifier.padding(3.dp))
+            modifier = Modifier.padding(3.dp)
+        )
     }
 }
 
